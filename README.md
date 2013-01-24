@@ -7,13 +7,13 @@ MJSocialComposeViewController allows to use social API of SLComposeViewControlle
 in applications which may be running on older iOS versions, 5.0 and above.
 On versions below 6.0 the functionality degrades to supporting Twitter network only.
 
-MJSocialComposeViewController is not intrusive if there is no need for that. If you compile you project
-for iOS version 6.0 and above then MJSocialComposeViewController ceases to exist. You project uses iOS 6.0
-native SLComposeViewController class. You do not need to do anything special when you drop support
+MJSocialComposeViewController is not intrusive when there is no need for that. If you compile you project
+for iOS version 6.0 and above then MJSocialComposeViewController will cease to exist. You project will use
+iOS 6.0 native SLComposeViewController class. You do not need to do anything special when you drop support
 of older iOS versions in a future.
 
 MJSocialComposeViewController class is also interesting as an illustration of a proxy class implementation
-in Objective C and may be used as a tutorial.
+in Objective C and may serve as a tutorial.
 
 How to use
 ==========
