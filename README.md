@@ -1,7 +1,15 @@
 MJSocialComposeViewController
 =============================
 
-MJSocialComposeViewController class allows to use iOS 6.0 SLComposeViewController interface in iOS 5.0.
+MJSocialComposeViewController class allows to use SLComposeViewController interface in iOS 5.0.
+MJSocialComposeViewController demonstrates a complete inmlementation of a proxy class in Objectie C.
+
+SLComposeViewController class supports posting messages on social networks Twitter, Facebook, SinaWeibo.
+The class was added in iOS version 6.0 and functionally is an extension of TWTweetComposeViewController class
+of IOS 5.0. But from an application perspective these are completely independant classes.
+
+It may be desirable to take advantages of class SLComposeViewController on newer iOS but fallback
+to TWTweetComposeViewController if the app is running on iOS 5.
 
 MJSocialComposeViewController allows to use social API of SLComposeViewController provided by iOS 6.0
 in applications which may be running on older iOS versions, 5.0 and above.
@@ -27,3 +35,6 @@ Start coding.
 
 See implementation of SocialComposer.xcodeproj as an example, namely MJViewController class.
 
+References
+==========
+http://www.mikeash.com/pyblog/friday-qa-2009-03-27-objective-c-message-forwarding.html
