@@ -2,7 +2,7 @@ MJSocialComposeViewController
 =============================
 
 MJSocialComposeViewController class allows to use SLComposeViewController interface in iOS 5.0.
-MJSocialComposeViewController demonstrates a complete inmlementation of a proxy class in Objectie C.
+MJSocialComposeViewController demonstrates a complete imlementation of a proxy class in Objectie C.
 
 SLComposeViewController class supports posting messages on social networks Twitter, Facebook, SinaWeibo.
 The class was added in iOS version 6.0 and functionally is an extension of TWTweetComposeViewController class
