@@ -40,6 +40,8 @@
 + (MJSocialComposeViewController *)composeViewControllerForServiceType:(NSString *)serviceType;
 @property(nonatomic, readonly) NSString *serviceType;
 @property (nonatomic, copy) SLComposeViewControllerCompletionHandler completionHandler;
+
+//Facebook service doesn't like proxy, so I have to expose real controller...
 @property(nonatomic, retain) id controller;
 @end
 

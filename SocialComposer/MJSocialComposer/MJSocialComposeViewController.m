@@ -245,7 +245,7 @@ NSString *const SLServiceTypeSinaWeibo = @"com.apple.social.sinaweibo";
     return [self.controller isKindOfClass:aClass];
 }
 
-
+#if 0 //for debug...
 - (BOOL)isEqual:(id)object
 {
     return [super isEqual:object];
@@ -290,15 +290,16 @@ NSString *const SLServiceTypeSinaWeibo = @"com.apple.social.sinaweibo";
     return [super isProxy];
 }
 
-
 - (BOOL)isMemberOfClass:(Class)aClass
 {
     return [super isMemberOfClass:aClass];
 }
+
 - (BOOL)conformsToProtocol:(Protocol *)aProtocol
 {
     return [super conformsToProtocol:aProtocol];
 }
+#endif
 
 @end
 

@@ -82,11 +82,26 @@ void setButtonState(UIButton *btn, NSString *const service, ServiceState state)
     }
     else
     {
-        state = [SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter] ? SOk : SNotSignedin;
+        SLComposeViewController *ctrl;
+        ctrl = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        if (!ctrl)
+            state = SNotHere;
+        else
+            state = [SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter] ? SOk : SNotSignedin;
         setButtonState(self.tweetButton, @"Twitter", state);
-        state = [SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook] ? SOk : SNotSignedin;
+        
+        ctrl = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
+        if (!ctrl)
+            state = SNotHere;
+        else
+            state = [SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook] ? SOk : SNotSignedin;
         setButtonState(self.facebookButton, @"Facebook", state);
-        state = [SLComposeViewController isAvailableForServiceType:SLServiceTypeSinaWeibo] ? SOk : SNotSignedin;
+
+        ctrl = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeSinaWeibo];
+        if (!ctrl)
+            state = SNotHere;
+        else
+            state = [SLComposeViewController isAvailableForServiceType:SLServiceTypeSinaWeibo] ? SOk : SNotSignedin;
         setButtonState(self.weiboButton, @"Weibo", state);
     }
 
@@ -110,11 +125,14 @@ void setButtonState(UIButton *btn, NSString *const service, ServiceState state)
     ctrl.completionHandler = ^(SLComposeViewControllerResult result)
     {
         if (result == SLComposeViewControllerResultCancelled)
-            [self dismissModalViewControllerAnimated:NO];
+            [self dismissModalViewControllerAnimated:YES];
     };
     
-    // Suppress compiler warning by casting
-    [self presentModalViewController:(id)ctrl animated:NO];
+    // The idea is to use the proxy as if it was a real object, the following should be alright
+    //[self presentModalViewController:(id)ctrl animated:YES];
+    //[self presentViewController:ctrl animated:YES completion:^(void){}];
+    // but Facebook interface doesn't like it, pass real object
+    [self presentViewController:ctrl.controller animated:NO completion:^(void){}];
     
     //hide the keyboard
     [[(UIViewController*)ctrl view] endEditing:YES];
@@ -163,8 +181,9 @@ void setButtonState(UIButton *btn, NSString *const service, ServiceState state)
     res = [ctrl addURL:[NSURL URLWithString:@"http://example.com"]];
     NSLog(@"add URL result %@", res ? @"OK" : @"Failed");
     
-    // Suppress compiler warning by casting
-    [self presentViewController:(UIViewController*)ctrl animated:NO completion:^(void){}]; //]<#^(void)completion#>]
+    // The idea is to use the proxy as if it was a real object and the following call
+    // should be alright. However Facebook service doesn't like it, so we pass the real object
+    [self presentViewController:ctrl.controller animated:YES completion:^(void){}];
     //[self presentModalViewController:(id)ctrl animated:YES];
 }
 
