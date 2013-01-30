@@ -27,6 +27,7 @@ typedef enum
     SOk,
 } ServiceState;
 
+//
 void setButtonState(UIButton *btn, NSString *const service, ServiceState state)
 {
     btn.enabled = state == SNotSignedin || state == SOk;
@@ -52,6 +53,7 @@ void setButtonState(UIButton *btn, NSString *const service, ServiceState state)
     [btn setTitle:title forState:UIControlStateNormal];
 }
 
+//
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -61,6 +63,7 @@ void setButtonState(UIButton *btn, NSString *const service, ServiceState state)
     self.osVersionLabel.text = [NSString stringWithFormat:@"%f", kCFCoreFoundationVersionNumber];
 }
 
+//
 -(void)checkStatus
 {
     ServiceState state = SNone;
@@ -107,6 +110,7 @@ void setButtonState(UIButton *btn, NSString *const service, ServiceState state)
 
 }
 
+//
 -(void)loginToService:(NSString*)serviceId
 {
     SLComposeViewController *ctrl = [SLComposeViewController composeViewControllerForServiceType:serviceId];
@@ -128,16 +132,18 @@ void setButtonState(UIButton *btn, NSString *const service, ServiceState state)
             [self dismissModalViewControllerAnimated:YES];
     };
     
-    // The idea is to use the proxy as if it was a real object, the following should be alright
+    // The idea is to use the proxy as if it was a real object and the following call
+    // should be alright.
     //[self presentModalViewController:(id)ctrl animated:YES];
     //[self presentViewController:ctrl animated:YES completion:^(void){}];
-    // but Facebook interface doesn't like it, pass real object
-    [self presentViewController:ctrl.controller animated:NO completion:^(void){}];
+    // However Facebook service doesn't like it, so we pass the real object.
+    [self presentViewController:ctrl.controller animated:NO completion:nil];
     
     //hide the keyboard
     [[(UIViewController*)ctrl view] endEditing:YES];
 }
 
+//
 -(void)postToService:(NSString*)serviceId
 {
     SLComposeViewController *ctrl = [SLComposeViewController composeViewControllerForServiceType:serviceId];
@@ -150,10 +156,8 @@ void setButtonState(UIButton *btn, NSString *const service, ServiceState state)
         return;
     }
     
-    // Set the initial tweet text. See the framework for additional properties that can be set.
     [ctrl setInitialText:@"Hello. This is a post."];
     
-    // Create the completion handler block.
     ctrl.completionHandler = ^(SLComposeViewControllerResult result)
     {
         NSString *output = @"";
@@ -171,7 +175,6 @@ void setButtonState(UIButton *btn, NSString *const service, ServiceState state)
          
          [self performSelectorOnMainThread:@selector(displayPostResult:) withObject:output waitUntilDone:NO];
          
-         // Dismiss the tweet composition view controller.
          [self dismissModalViewControllerAnimated:YES];
      };
     
@@ -183,8 +186,8 @@ void setButtonState(UIButton *btn, NSString *const service, ServiceState state)
     
     // The idea is to use the proxy as if it was a real object and the following call
     // should be alright. However Facebook service doesn't like it, so we pass the real object
-    [self presentViewController:ctrl.controller animated:YES completion:^(void){}];
     //[self presentModalViewController:(id)ctrl animated:YES];
+    [self presentViewController:ctrl.controller animated:YES completion:nil];
 }
 
 - (IBAction)sendToTwitter:(id)sender

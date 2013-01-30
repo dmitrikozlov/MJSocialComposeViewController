@@ -24,7 +24,7 @@
 // THE SOFTWARE.
 //
 
-// It doesn't make sense to compile these againts older SDKs
+// It doesn't make sense to compile this code againts older SDKs
 #if __IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_6_0
 #error "Requires iOS SDK 6.0 or above"
 #endif
