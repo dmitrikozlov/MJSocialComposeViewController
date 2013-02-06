@@ -1,39 +1,54 @@
 MJSocialComposeViewController
 =============================
 
-MJSocialComposeViewController class allows to use SLComposeViewController interface in iOS 5.0.
-MJSocialComposeViewController demonstrates a complete imlementation of a proxy class in Objectie C.
+With iOS 5.0 Apple introduced an interface to aid posting messages to Twitter. iOS 6.0 didn't extend that
+interface but rather replaced it with a new one that allows posting to three social networks: Twitter, Facebook
+and SinaWeibo. The new interface is very similar to the old one, still they are different and applications
+targeting both 5.0 and 6.0 and above have to program interactions with social networks twice.
 
-SLComposeViewController class supports posting messages on social networks Twitter, Facebook, SinaWeibo.
-The class was added in iOS version 6.0 and functionally is an extension of TWTweetComposeViewController class
-of IOS 5.0. But from an application perspective these are completely independant classes.
-
-It may be desirable to take advantages of class SLComposeViewController on newer iOS but fallback
-to TWTweetComposeViewController if the app is running on iOS 5.
-
-MJSocialComposeViewController allows to use social API of SLComposeViewController provided by iOS 6.0
-in applications which may be running on older iOS versions, 5.0 and above.
-On versions below 6.0 the functionality degrades to supporting Twitter network only.
-
-MJSocialComposeViewController is not intrusive when there is no need for that. If you compile you project
-for iOS version 6.0 and above then MJSocialComposeViewController will cease to exist. You project will use
-iOS 6.0 native SLComposeViewController class. You do not need to do anything special when you drop support
-of older iOS versions in a future.
+MJSocialComposeViewController class solves this problem in an elegant way. It uses Objective C powerful
+message forwarding mechanism and implements a proxy class exposing SLComposeViewController interface
+to a caller. That allows to program to iOS 6.0 SDK interface while targeting earlier runtime versions of iOS.
 
 MJSocialComposeViewController class is also interesting as an illustration of a proxy class implementation
-in Objective C and may serve as a tutorial.
+in Objective C language and may serve as a tutorial. I found that message forwarding is not documented very
+well. This small project may be helpful in filling in this gap.
+
+MJSocialComposeViewController doesn't add functionality. It uses SLComposeViewController in iOS 6 and
+falls back to TWTweetComposeViewController on iOS 5. It doesn't provide Facebook or SinaWeibo integration
+on iOS 5.
+
+MJSocialComposeViewController is not intrusive when there is no need for that. If you compile you project
+for iOS version 6.0 and above then MJSocialComposeViewController will cease to exist (literally). You project
+will use iOS 6.0 native SLComposeViewController class. You do not need to do anything special when you drop
+support of older iOS versions in a future.
 
 How to use
 ==========
 
 Add files from the folder MJSocialComposer to your project.
-Add Social.framework and Twitter.framework in the project and mark them as Optional.
-Set Deployment Target to 5.0. You may set it to a smaller number, but you want get any functionality from
-MJSocialComposeViewController class (lower than 5.0 versions haven't been tested).
-Import header "MJSocialComposeViewController.h" and maybe "OSVersion.h".
-Start coding.
+Add Social.framework and Twitter.framework in to the project and mark them as Optional.
+Set Deployment Target to 5.0. You may set it to a smaller number, but you wont get any functionality from
+MJSocialComposeViewController class then. Be warned: lower than 5.0 versions haven't been tested, you are
+on your own.
+Import header "MJSocialComposeViewController.h" header in your source and start coding.
 
 See implementation of SocialComposer.xcodeproj as an example, namely MJViewController class.
+
+What went wrong
+===============
+
+The proxy class implementation is all good but there is one glitch. Facebook implementation in iOS 6.0
+(that is SLComposeViewController class) doesn't like proxy and call to
+
+[aViewController presentViewController:proxyComposer animated:NO completion:nil];
+
+doesn't work. 'proxyComposer' above is a pointer to MJSocialComposeViewController object.
+This works alright with Twitter or SinaWeibo services. That also works fine if proxyComposer object is a
+proxy of a plain UIViewController object.
+
+A workaround is to pass an actual object:
+[aViewController presentViewController:proxyComposer.actualController animated:NO completion:nil];
 
 References
 ==========
