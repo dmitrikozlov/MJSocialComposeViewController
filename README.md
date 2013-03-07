@@ -35,8 +35,8 @@ Import header "MJSocialComposeViewController.h" header in your source and start 
 
 See implementation of SocialComposer.xcodeproj as an example, namely MJViewController class.
 
-What went wrong
-===============
+A glitch
+========
 
 The proxy class implementation is all good but there is one glitch. Facebook implementation in iOS 6.0
 (that is SLComposeViewController class) doesn't like proxy and call to
